@@ -17,19 +17,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Authorization {
-    public final StringProperty usernameFieldStyle = new SimpleStringProperty();
+    public final StringProperty idNumberFieldStyle = new SimpleStringProperty();
     public final StringProperty passwordFieldStyle = new SimpleStringProperty();
-    public final StringProperty username = new SimpleStringProperty();
+    public final StringProperty idNumber = new SimpleStringProperty();
     public final StringProperty password = new SimpleStringProperty();
-    public BooleanProperty usernameEmpty = new SimpleBooleanProperty(false);
+    public BooleanProperty idNumberEmpty = new SimpleBooleanProperty(false);
     public BooleanProperty passwordEmpty = new SimpleBooleanProperty(false);
     private final String highlightedStyle = "-fx-border-color: red; -fx-border-width: 2px;";
     private final String defaultStyle = "";
 
-    public void setUsername(String string) {
-        this.username.set(string);
-        usernameFieldStyle.set(string.isBlank() ? highlightedStyle : defaultStyle);
-        usernameEmpty.set(string.isBlank());
+    public void setIdNumber(String string) {
+        this.idNumber.set(string);
+        idNumberFieldStyle.set(string.isBlank() ? highlightedStyle : defaultStyle);
+        idNumberEmpty.set(string.isBlank());
     }
 
     public void setPassword(String string) {
@@ -39,14 +39,14 @@ public class Authorization {
     }
 
     public void signIn() {
-        if (usernameEmpty.get() || passwordEmpty.get())
+        if (idNumberEmpty.get() || passwordEmpty.get())
             return;
         Database database = Database.getInstance();
         String hash = Hash.toString(Hash.hash(password.get()));
-        String statement = "SELECT * FROM people WHERE username = ? AND password_hash = ?";
+        String statement = "SELECT * FROM people WHERE idNumber = ? AND password_hash = ?";
         Connection connection = database.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
-            preparedStatement.setString(1, username.get());
+            preparedStatement.setString(1, idNumber.get());
             preparedStatement.setString(2, hash);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (!resultSet.next()) {
@@ -73,7 +73,7 @@ public class Authorization {
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setTitle("Authentication");
         dialog.setHeaderText("Failed to authenticated");
-        dialog.setContentText("Wrong username or password");
+        dialog.setContentText("Wrong idNumber or password");
         dialog.showAndWait();
     }
 

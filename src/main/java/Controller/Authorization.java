@@ -13,16 +13,16 @@ import java.util.ResourceBundle;
 
 public class Authorization implements Initializable {
     private final Model.Authorization model = new Model.Authorization();
-    public Label emptyUsernameLabel;
+    public Label emptyIdNumberLabel;
     public Label emptyPasswordLabel;
     public Button signInButton;
     @FXML
-    private TextField usernameField;
+    private TextField idNumberField;
     @FXML
     private TextField passwordField;
 
     public void onClickSignInButton(ActionEvent actionEvent) {
-        model.setUsername(usernameField.getText());
+        model.setIdNumber(idNumberField.getText());
         model.setPassword(passwordField.getText());
         model.signIn();
     }
@@ -33,13 +33,13 @@ public class Authorization implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        usernameField.textProperty().addListener((observable, oldValue, newValue) -> model.setUsername(newValue));
+        idNumberField.textProperty().addListener((observable, oldValue, newValue) -> model.setIdNumber(newValue));
         passwordField.textProperty().addListener((observable, oldValue, newValue) -> model.setPassword(newValue));
 
-        usernameField.styleProperty().bindBidirectional(model.usernameFieldStyle);
+        idNumberField.styleProperty().bindBidirectional(model.idNumberFieldStyle);
         passwordField.styleProperty().bindBidirectional(model.passwordFieldStyle);
 
-        emptyUsernameLabel.visibleProperty().bindBidirectional(model.usernameEmpty);
+        emptyIdNumberLabel.visibleProperty().bindBidirectional(model.idNumberEmpty);
         emptyPasswordLabel.visibleProperty().bindBidirectional(model.passwordEmpty);
     }
 }
