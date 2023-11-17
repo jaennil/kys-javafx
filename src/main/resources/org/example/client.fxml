@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="600" prefWidth="600" spacing="10.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Client">
+    <MenuBar>
+        <Menu mnemonicParsing="false" text="Menu">
+            <MenuItem mnemonicParsing="false" text="Appointments" />
+            <MenuItem mnemonicParsing="false" onAction="#onClickPetMenuItem" text="My pets" />
+        </Menu>
+    </MenuBar>
+
+    <HBox alignment="TOP_RIGHT" style="-fx-padding: 10px;">
+        <Label onMouseClicked="#onClickLogOut" text="Log out" textFill="blue">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Label>
+    </HBox>
+    <Label fx:id="welcomeLabel" text="Welcome, {firstname} {lastname}" />
+
+    <Label text="Sign up for an appointment">
+        <font>
+            <Font name="System Bold" size="14.0" />
+        </font>
+    </Label>
+    <DatePicker fx:id="datePicker" promptText="date" />
+    <HBox alignment="CENTER" spacing="10.0">
+        <VBox alignment="CENTER" prefWidth="100.0">
+            <Label text="Pet" />
+        </VBox>
+        <VBox alignment="CENTER">
+            <ComboBox fx:id="petComboBox" prefWidth="150.0" promptText="Choose..." />
+        </VBox>
+    </HBox>
+    <HBox alignment="CENTER" spacing="10.0">
+        <VBox alignment="CENTER" prefWidth="100.0">
+            <Label text="Doctor" />
+        </VBox>
+        <VBox alignment="CENTER">
+            <ComboBox fx:id="doctorComboBox" prefWidth="150.0" promptText="Choose..." />
+        </VBox>
+    </HBox>
+    <Button onAction="#onClickSubmit" text="Submit" />
+   <Label  layoutX="219.0" layoutY="119.0" text="Your appointments">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+   <TableView fx:id="appointmentsTableView" maxWidth="450.0" prefHeight="200.0" prefWidth="200.0">
+       <columns>
+           <TableColumn fx:id="petColumn" prefWidth="150.0" text="Pet" />
+           <TableColumn fx:id="doctorColumn" prefWidth="150.0" text="Doctor" />
+           <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date" />
+       </columns>
+   </TableView>
+</VBox>
