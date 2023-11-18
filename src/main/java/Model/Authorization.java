@@ -81,6 +81,7 @@ public class Authorization {
     }
 
     private void handleWrongCaptcha() {
+        generateCaptcha();
         captchaAttempts++;
         captchaInfoProperty.set("Wrong captcha. Attempts left: " + (3 - captchaAttempts));
         System.out.println("captcha false");
