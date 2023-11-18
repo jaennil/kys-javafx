@@ -52,8 +52,14 @@ public class Authorization {
 
     private void handleCorrectCaptcha() {
         System.out.println("captcha true");
-        if (idNumber.get().isBlank() || password.get().isBlank())
+        if (idNumber.get().isBlank()) {
+            idNumberEmpty.set(true);
             return;
+        }
+        if (password.get().isBlank()) {
+            passwordEmpty.set(true);
+            return;
+        }
         System.out.println(idNumber.get());
         Database database = Database.getInstance();
         String hash = Hash.toString(Hash.hash(password.get()));
