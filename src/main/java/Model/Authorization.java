@@ -57,7 +57,7 @@ public class Authorization {
         System.out.println(idNumber.get());
         Database database = Database.getInstance();
         String hash = Hash.toString(Hash.hash(password.get()));
-        String statement = "SELECT * FROM Participants WHERE idNumber = ? AND password_hash = ?";
+        String statement = "SELECT * FROM Participants WHERE idNumber = ? AND password = ?";
         Connection connection = database.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
             preparedStatement.setString(1, idNumber.get());
@@ -75,9 +75,9 @@ public class Authorization {
     }
 
     private void handleWrongCaptcha() {
-        captchaInfoProperty.set("Wrong captcha. try again");
-        System.out.println("captcha false");
         captchaAttempts++;
+        captchaInfoProperty.set("Wrong captcha. Attempts left: " + (3 - captchaAttempts));
+        System.out.println("captcha false");
         System.out.println(captchaAttempts);
         if (captchaAttempts == 3) {
             captchaInfoProperty.set("Authorization locked for 10 seconds. Please wait");
