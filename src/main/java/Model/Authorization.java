@@ -7,6 +7,7 @@ import com.mewebstudio.captcha.Captcha;
 import com.mewebstudio.captcha.GeneratedCaptcha;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Alert;
@@ -20,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.prefs.Preferences;
 
 public class Authorization {
     public final StringProperty idNumberFieldStyle = new SimpleStringProperty("");
@@ -31,6 +33,7 @@ public class Authorization {
     public BooleanProperty idNumberEmpty = new SimpleBooleanProperty(false);
     public BooleanProperty passwordEmpty = new SimpleBooleanProperty(false);
     public BooleanProperty tooManyAttempts = new SimpleBooleanProperty(false);
+    public BooleanProperty rememberMe = new SimpleBooleanProperty(false);
     private final String highlightedStyle = "-fx-border-color: red; -fx-border-width: 2px;";
     private final String defaultStyle = "";
     public final ObjectProperty<Image> captchaImage = new SimpleObjectProperty<>();
@@ -38,50 +41,74 @@ public class Authorization {
     private String captchaCode;
 
 
-    public void highlightIdNumber() {
+    public void handleIdNumberHighlight() {
         String idNumber = this.idNumber.get();
         idNumberFieldStyle.set(idNumber.isBlank() ? highlightedStyle : defaultStyle);
         idNumberEmpty.set(idNumber.isBlank());
     }
 
-    public void highlightPassword() {
+    public void handlePasswordHighlight() {
         String password = this.password.get();
         passwordFieldStyle.set(password.isBlank() ? highlightedStyle : defaultStyle);
         passwordEmpty.set(password.isBlank());
     }
 
     private void handleCorrectCaptcha() {
-        System.out.println("captcha true");
-        if (idNumber.get().isBlank()) {
+        System.out.println("captcha is correct");
+        captchaInfoProperty.set("");
+
+        String idNumber = this.idNumber.get();
+        String password = this.password.get();
+
+        if (idNumber.isBlank()) {
             idNumberEmpty.set(true);
             return;
         }
-        if (password.get().isBlank()) {
+
+        if (password.isBlank()) {
             passwordEmpty.set(true);
             return;
         }
-        System.out.println(idNumber.get());
-        Database database = Database.getInstance();
-        String hash = Hash.toString(Hash.hash(password.get()));
-        String statement = "SELECT * FROM Participants WHERE idNumber = ? AND password = ?";
-        Connection connection = database.getConnection();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
-            preparedStatement.setString(1, idNumber.get());
-            preparedStatement.setString(2, hash);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                showWrongCredentialsDialog();
-                return;
+        String passwordHash = Hash.toString(Hash.hash(password));
+        ResultSet user = findUserInDatabase(idNumber, passwordHash);
+        if (handleUserResultSet(user)) {
+            System.out.println("authorized successfully");
+            handleRememberMe();
+            AuthenticatedUser.initFromResultSet(user);
+            loadCorrespondingView();
+            return;
+        }
+        showWrongCredentialsDialog();
+    }
+
+    boolean handleUserResultSet(ResultSet user) {
+        try {
+            if (user.next()) {
+                return true;
             }
-            AuthenticatedUser.initFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        loadCorrespondingView();
+        return false;
+    }
+
+    ResultSet findUserInDatabase(String idNumber, String passwordHash) {
+        System.out.println(passwordHash);
+
+        Database database = Database.getInstance();
+        String statement = "SELECT * FROM Auth WHERE idNumber = ? AND passwordHash = ?";
+        Connection connection = database.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+            preparedStatement.setString(1, idNumber);
+            preparedStatement.setString(2, passwordHash);
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void handleWrongCaptcha() {
-        generateCaptcha();
         captchaAttempts++;
         captchaInfoProperty.set("Wrong captcha. Attempts left: " + (3 - captchaAttempts));
         System.out.println("captcha false");
@@ -99,6 +126,7 @@ public class Authorization {
             timeline.setCycleCount(1);
             timeline.play();
         }
+        generateCaptcha();
     }
 
     public void signIn() {
@@ -115,12 +143,15 @@ public class Authorization {
     }
 
     private void loadCorrespondingView() {
+        System.out.println("loading corresponding view");
         AuthenticatedUser authenticatedUser = AuthenticatedUser.getInstance();
-        try {
-            App.setRoot(authenticatedUser.getRole());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Platform.runLater(() -> {
+            try {
+                App.setRoot(authenticatedUser.getRoleName());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void generateCaptcha() {
@@ -147,6 +178,48 @@ public class Authorization {
             App.setRoot("registration");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void handleRememberedUser() {
+        Preferences pref = Preferences.userRoot();
+        String idNumber = pref.get("idNumber", "");
+        String passwordHash = pref.get("passwordHash", "");
+        if (idNumber.isEmpty()) {
+            System.out.println("idNumber is empty in handleRememberedUser");
+            return;
+        }
+        if (passwordHash.isEmpty()) {
+            System.out.println("password is empty in handleRememberedUser");
+            return;
+        }
+        System.out.println(idNumber);
+        System.out.println(passwordHash);
+        System.out.println("trying to find remembered user in database");
+        ResultSet user = findUserInDatabase(idNumber, passwordHash);
+        if (handleUserResultSet(user)) {
+            System.out.println("authorized successfully");
+            AuthenticatedUser.initFromResultSet(user);
+            loadCorrespondingView();
+            return;
+        }
+        showWrongCredentialsDialog();
+    }
+
+    public void handleRememberMe() {
+        Preferences pref = Preferences.userRoot();
+        String idNumber = this.idNumber.get();
+        String password = this.password.get();
+        if (rememberMe.get()) {
+            if (idNumber.isEmpty()) {
+                return;
+            }
+            if (password.isEmpty()) {
+                return;
+            }
+            pref.put("idNumber", idNumber);
+            String hash = Hash.toString(Hash.hash(password));
+            pref.put("passwordHash", hash);
         }
     }
 }

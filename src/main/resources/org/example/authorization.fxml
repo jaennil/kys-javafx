@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -19,8 +20,9 @@
     <PasswordField fx:id="passwordField" maxWidth="150" promptText="**********" />
    <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    <Label fx:id="captchaInfoLabel" textFill="red" />
-   <Label alignment="CENTER" text="captcha" />
+   <Label alignment="CENTER" text="Captcha code" />
    <TextField fx:id="captchaField" maxWidth="150.0" promptText="A10uB3" />
+   <CheckBox fx:id="rememberMeCheckbox" mnemonicParsing="false" text="Remember me" />
     <Button fx:id="signInButton" defaultButton="true" onAction="#onClickSignInButton" text="sign in" />
     <HBox alignment="CENTER" spacing="8">
         <Label text="Don't have an account?" />
