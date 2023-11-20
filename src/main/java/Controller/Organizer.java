@@ -38,6 +38,7 @@ public class Organizer {
     }
 
     public void myProfile(ActionEvent actionEvent) {
+        model.myProfile();
     }
 
     public void events(ActionEvent actionEvent) {

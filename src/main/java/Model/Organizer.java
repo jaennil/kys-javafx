@@ -59,4 +59,12 @@ public class Organizer {
             return "Добрый вечер!";
         }
     }
+
+    public void myProfile() {
+        try {
+            App.setRoot("myProfile");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
