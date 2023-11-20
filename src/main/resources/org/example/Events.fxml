@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<?import javafx.scene.image.ImageView?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.Events">
+
+    <top>
+        <HBox alignment="CENTER">
+<!--            <ImageView>-->
+                <!-- Ваш логотип -->
+<!--            </ImageView>-->
+            <Label text="Главное окно системы" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Авторизация" onAction="#openLogin"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="eventsTable">
+            <columns>
+                <TableColumn text="Название" fx:id="eventNameColumn"/>
+                <TableColumn text="Направление" fx:id="eventDirectionColumn"/>
+                <TableColumn text="Дата" fx:id="eventDateColumn"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER">
+            <Label text="Фильтр по направлению:" />
+            <ChoiceBox fx:id="directionFilter">
+                <!-- Ваши направления мероприятий -->
+            </ChoiceBox>
+            <Label text="Фильтр по дате:" />
+            <DatePicker fx:id="dateFilter" />
+        </HBox>
+    </bottom>
+
+</BorderPane>

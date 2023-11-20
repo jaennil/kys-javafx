@@ -27,13 +27,13 @@ public class Connecting {
         boolean isConnected = Database.connect();
         setConnected(isConnected);
         if (isConnected)
-            authenticateView();
+            eventsView();
     }
 
-    private void authenticateView() {
+    private void eventsView() {
         Platform.runLater(() -> {
             try {
-                App.setRoot("authorization");
+                App.setRoot("Events");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
