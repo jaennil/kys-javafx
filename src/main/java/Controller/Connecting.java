@@ -1,5 +1,6 @@
 package Controller;
 
+import Other.SharedData;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +32,7 @@ public class Connecting implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        SharedData.getInstance().setData("first time");
         connectionProgress.textProperty().bindBidirectional(model.connectionResultProperty());
         delay(100, model::connectToDatabase);
     }

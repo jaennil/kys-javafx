@@ -1,6 +1,7 @@
 package Controller;
 
 import Other.Hash;
+import Other.SharedData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Authorization implements Initializable {
@@ -36,7 +38,10 @@ public class Authorization implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        model.handleRememberedUser();
+        if (Objects.equals(SharedData.getInstance().getData(), "first time")) {
+            model.handleRememberedUser();
+            SharedData.getInstance().setData("");
+        }
         model.generateCaptcha();
         idNumberField.textProperty().bindBidirectional(model.idNumber);
         passwordField.textProperty().bindBidirectional(model.password);
