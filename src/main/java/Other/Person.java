@@ -7,6 +7,14 @@ public class Person {
         this.fullname = fullname;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
 //    public static Person fromResultSet(ResultSet resultSet) {
 //        try {
 //            return new Person(

@@ -38,4 +38,12 @@ public class AuthenticatedUser extends Person {
     public String getRole() {
         return role;
     }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
 }

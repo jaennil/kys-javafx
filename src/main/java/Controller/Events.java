@@ -14,7 +14,6 @@ import org.example.App;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,7 +72,7 @@ public class Events{
                 String date = resultSet.getString("date");
                 int days = resultSet.getInt("days");
                 String imagePath = resultSet.getString("photo");
-                ImageView photo = new ImageView(new Image(getClass().getResourceAsStream("/events/"+imagePath)));
+                ImageView photo = new ImageView(new Image(getClass().getResourceAsStream("/images/events/" +imagePath)));
                 int cityId = resultSet.getInt("city_id");
                 String field = resultSet.getString("field");
                 String description = resultSet.getString("description");
