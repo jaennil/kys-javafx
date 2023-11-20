@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.DetailedEvent">
-
-    <center>
-        <VBox spacing="20">
-            <Label style="-fx-font-size: 32;" text="Название мероприятия" />
-
-            <HBox spacing="15">
-                <StackPane style="-fx-padding: 10">
-                    <ImageView fitHeight="100" fitWidth="100">
-                        <image>
-                            <Image url="/events/1.jpeg" />
-                        </image>
-                    </ImageView>
-
-                    <BorderPane style="-fx-padding: 10">
-                        <Label alignment="CENTER" text="Дата" />
-                    </BorderPane>
-
-                    <BorderPane style="-fx-padding: 10">
-                        <Label alignment="CENTER" text="Город" />
-                    </BorderPane>
-
-                    <BorderPane style="-fx-padding: 10">
-                        <Label alignment="CENTER" text="Организатор" />
-                    </BorderPane>
-                </StackPane>
-
-                <BorderPane>
-                    <Label wrapText="true" text="Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание Описание " />
-                </BorderPane>
-            </HBox>
-        </VBox>
-    </center>
-</BorderPane>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DetailedEvent">
+   <children>
+      <HBox>
+         <children>
+            <Label fx:id="back" alignment="TOP_CENTER" onMouseClicked="#back" text="Назад" textFill="BLUE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="name" text="Название мероприятия" textAlignment="CENTER">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="date" text="Дата" />
+                  <Label fx:id="city" text="Город" />
+                  <Label fx:id="organizer" text="Организатор" />
+               </children>
+            </VBox>
+            <Label fx:id="description" text="Описание описание" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
