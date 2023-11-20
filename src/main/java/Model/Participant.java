@@ -1,10 +1,11 @@
 package Model;
 
+import javafx.scene.input.MouseEvent;
 import org.example.App;
 
 import java.io.IOException;
 
-public class Organizer {
+public class Participant {
     public void logOut() {
         try {
             App.setRoot("authorization");
@@ -12,4 +13,5 @@ public class Organizer {
             throw new RuntimeException(e);
         }
     }
+
 }

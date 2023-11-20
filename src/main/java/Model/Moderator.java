@@ -4,7 +4,7 @@ import org.example.App;
 
 import java.io.IOException;
 
-public class Organizer {
+public class Moderator {
     public void logOut() {
         try {
             App.setRoot("authorization");

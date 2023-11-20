@@ -7,51 +7,35 @@ import java.sql.SQLException;
 
 public class AuthenticatedUser extends Person {
     private static AuthenticatedUser instance;
-    private Integer id;
     private String idNumber;
-    private Integer roleId;
+    private String role;
 
-    public AuthenticatedUser(Integer id, String idNumber, Integer roleId, String name) {
-        super(name);
-        this.id = id;
+    public AuthenticatedUser(String idNumber, String fullname, String role) {
+        super(fullname);
         this.idNumber = idNumber;
-        this.roleId = roleId;
+        this.role = role;
     }
 
     public static synchronized AuthenticatedUser getInstance() {
         if (instance == null) {
-            instance = new AuthenticatedUser(null, null, null, null);
+            instance = new AuthenticatedUser(null, null, null);
         }
         return instance;
     }
 
-    public static void initFromResultSet(ResultSet resultSet) {
+    public static void initFromResultSet(ResultSet resultSet, String role) {
         try {
             instance = new AuthenticatedUser(
-                    resultSet.getInt("id"),
                     resultSet.getString("idNumber"),
-                    resultSet.getInt("role_id"),
-                    resultSet.getString("name")
+                    resultSet.getString("fullname"),
+                    role
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String getRoleName() {
-        Database database = Database.getInstance();
-        String statement = "SELECT * FROM Role WHERE id = ?";
-        Connection connection = database.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setInt(1, roleId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString("name");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return "";
+    public String getRole() {
+        return role;
     }
 }

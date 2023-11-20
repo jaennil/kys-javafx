@@ -1,13 +1,10 @@
 package Other;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class Person {
-    private String name;
+    private String fullname;
 
-    public Person(String name) {
-        this.name = name;
+    public Person(String fullname) {
+        this.fullname = fullname;
     }
 
 //    public static Person fromResultSet(ResultSet resultSet) {

@@ -5,8 +5,8 @@ import org.example.App;
 
 import java.io.IOException;
 
-public class Organizer {
-    private final Model.Organizer model = new Model.Organizer();
+public class Participant {
+    private final Model.Participant model = new Model.Participant();
     public void logOut(MouseEvent event) {
         model.logOut();
     }

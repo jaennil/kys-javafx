@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
+
 public class Authorization {
     public final StringProperty idNumberFieldStyle = new SimpleStringProperty("");
     public final StringProperty passwordFieldStyle = new SimpleStringProperty("");
@@ -70,42 +71,38 @@ public class Authorization {
             return;
         }
         String passwordHash = Hash.toString(Hash.hash(password));
-        ResultSet user = findUserInDatabase(idNumber, passwordHash);
-        if (handleUserResultSet(user)) {
+        boolean userAuthenticated = tryAuthenticateUser(idNumber, passwordHash);
+        if (userAuthenticated) {
             System.out.println("authorized successfully");
             handleRememberMe();
-            AuthenticatedUser.initFromResultSet(user);
             loadCorrespondingView();
             return;
         }
         showWrongCredentialsDialog();
     }
 
-    boolean handleUserResultSet(ResultSet user) {
-        try {
-            if (user.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-
-    ResultSet findUserInDatabase(String idNumber, String passwordHash) {
+    boolean tryAuthenticateUser(String idNumber, String passwordHash) {
         System.out.println(passwordHash);
 
         Database database = Database.getInstance();
-        String statement = "SELECT * FROM Auth WHERE idNumber = ? AND passwordHash = ?";
         Connection connection = database.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(statement);
-            preparedStatement.setString(1, idNumber);
-            preparedStatement.setString(2, passwordHash);
-            return preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        String[] tables = {"Participant", "Organizer", "Jury", "Moderator"};
+        for (String table : tables) {
+            String statement = "SELECT * FROM " + table +  " WHERE idNumber = ? AND password_hash = ?";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(statement);
+                preparedStatement.setString(1, idNumber);
+                preparedStatement.setString(2, passwordHash);
+                ResultSet user = preparedStatement.executeQuery();
+                if (user.next()) {
+                    AuthenticatedUser.initFromResultSet(user, table);
+                    return true;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return false;
     }
 
     private void handleWrongCaptcha() {
@@ -147,7 +144,7 @@ public class Authorization {
         AuthenticatedUser authenticatedUser = AuthenticatedUser.getInstance();
         Platform.runLater(() -> {
             try {
-                App.setRoot(authenticatedUser.getRoleName());
+                App.setRoot(authenticatedUser.getRole());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -196,13 +193,14 @@ public class Authorization {
         System.out.println(idNumber);
         System.out.println(passwordHash);
         System.out.println("trying to find remembered user in database");
-        ResultSet user = findUserInDatabase(idNumber, passwordHash);
-        if (handleUserResultSet(user)) {
+        boolean userAuthenticated = tryAuthenticateUser(idNumber, passwordHash);
+        if (userAuthenticated) {
             System.out.println("authorized successfully");
-            AuthenticatedUser.initFromResultSet(user);
             loadCorrespondingView();
             return;
         }
+        pref.remove("idNumber");
+        pref.remove("passwordHash");
         showWrongCredentialsDialog();
     }
 
