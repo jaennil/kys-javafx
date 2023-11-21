@@ -74,19 +74,17 @@
         </children>
     </HBox>
     <HBox>
-        <children>
-            <Label text="Повтор пароля:"/>
-            <PasswordField fx:id="reEnterPasswordField" promptText="Re-enter password">
-                <font>
-                    <Font name="System Italic" size="12.0"/>
-                </font>
-            </PasswordField>
-        </children>
+        <Label text="Повтор пароля:"/>
+        <PasswordField fx:id="reEnterPasswordField" promptText="Re-enter password">
+            <font>
+                <Font name="System Italic" size="12.0"/>
+            </font>
+        </PasswordField>
     </HBox>
     <CheckBox fx:id="visiblePasswordCheckbox" mnemonicParsing="false" text="Видимый пароль"/>
     <Separator/>
     <HBox alignment="CENTER" spacing="10">
-        <Button style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;" text="OK"/>
+        <Button onAction="#handleOkButton" fx:id="okButton" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;" text="OK"/>
         <Button style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;" text="Отмена"/>
     </HBox>
 </VBox>

@@ -1,7 +1,9 @@
 package Controller;
 
 import Other.UnmaskedPasswordField;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -23,6 +25,7 @@ public class MyProfile implements Initializable {
     public Label emailLabel;
     public CheckBox visiblePasswordCheckbox;
     public ImageView image;
+    public Button okButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,21 +38,27 @@ public class MyProfile implements Initializable {
         phoneNumberLabel.textProperty().bindBidirectional(model.phoneNumber);
         emailLabel.textProperty().bindBidirectional(model.email);
         image.imageProperty().bindBidirectional(model.image);
+        passwordField.textProperty().bindBidirectional(model.password);
+        passwordField.promptTextProperty().bindBidirectional(model.passwordPrompt);
+        reEnterPasswordField.textProperty().bindBidirectional(model.reEnterPassword);
+        reEnterPasswordField.promptTextProperty().bindBidirectional(model.reEnterPasswordPrompt);
         visiblePasswordCheckbox.selectedProperty().addListener(event -> {
             if (visiblePasswordCheckbox.isSelected()) {
-                model.password = passwordField.getText();
+                model.passwordPrompt.set(passwordField.getText());
                 passwordField.clear();
-                passwordField.setPromptText(model.password);
-                model.reEnterPassword = reEnterPasswordField.getText();
+                model.reEnterPasswordPrompt.set(reEnterPasswordField.getText());
                 reEnterPasswordField.clear();
-                reEnterPasswordField.setPromptText(model.password);
             } else {
-                passwordField.setText(model.password);
-                passwordField.setPromptText("Password");
-                reEnterPasswordField.setText(model.reEnterPassword);
-                reEnterPasswordField.setPromptText("Re-enter password");
+                if (!model.passwordPrompt.get().isEmpty()) {
+                    passwordField.setText(model.passwordPrompt.get());
+                }
+                reEnterPasswordField.setText(model.reEnterPasswordPrompt.get());
             }
-            System.out.println("visible password checkbox toggled");
         });
+
+    }
+
+    public void handleOkButton(ActionEvent actionEvent) {
+        model.handleOkButton();
     }
 }
