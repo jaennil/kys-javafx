@@ -1,0 +1,154 @@
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Button?>
+<TabPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+    <tabs>
+        <Tab text="Активность 1" closable="false">
+            <content>
+                <VBox>
+                    <HBox>
+                        <Label text="Время начала:"/>
+                        <TextField fx:id="startTimeField1"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Время окончания:"/>
+                        <TextField fx:id="endTimeField1"/>
+                    </HBox>
+                    <ButtonBar>
+                        <buttons>
+                            <Button text="Начать" fx:id="startButton1"/>
+                            <Button text="Остановить" fx:id="stopButton1"/>
+                        </buttons>
+                    </ButtonBar>
+                    <TableView fx:id="judgesTable1" editable="true">
+                        <columns>
+                            <TableColumn text="ФИО"/>
+                            <TableColumn text="Позиция"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Активность 2" closable="false">
+            <content>
+                <VBox>
+                    <HBox>
+                        <Label text="Время начала:"/>
+                        <TextField fx:id="startTimeField2"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Время окончания:"/>
+                        <TextField fx:id="endTimeField2"/>
+                    </HBox>
+                    <ButtonBar>
+                        <buttons>
+                            <Button text="Начать" fx:id="startButton2"/>
+                            <Button text="Остановить" fx:id="stopButton2"/>
+                        </buttons>
+                    </ButtonBar>
+                    <TableView fx:id="judgesTable2" editable="true">
+                        <columns>
+                            <TableColumn text="ФИО"/>
+                            <TableColumn text="Позиция"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Активность 3" closable="false">
+            <content>
+                <VBox>
+                    <HBox>
+                        <Label text="Время начала:"/>
+                        <TextField fx:id="startTimeField3"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Время окончания:"/>
+                        <TextField fx:id="endTimeField3"/>
+                    </HBox>
+                    <ButtonBar>
+                        <buttons>
+                            <Button text="Начать" fx:id="startButton3"/>
+                            <Button text="Остановить" fx:id="stopButton3"/>
+                        </buttons>
+                    </ButtonBar>
+                    <TableView fx:id="judgesTable3" editable="true">
+                        <columns>
+                            <TableColumn text="ФИО"/>
+                            <TableColumn text="Позиция"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Доска" closable="false">
+            <content>
+                <ScrollPane>
+                    <VBox>
+                        <Button text="Экспорт в PDF" fx:id="exportToPdfButton"/>
+                    </VBox>
+                </ScrollPane>
+            </content>
+        </Tab>
+        <Tab text="Активность 4" closable="false">
+            <content>
+                <VBox>
+                    <HBox>
+                        <Label text="Время начала:"/>
+                        <TextField fx:id="startTimeField4"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Время окончания:"/>
+                        <TextField fx:id="endTimeField4"/>
+                    </HBox>
+                    <ButtonBar>
+                        <buttons>
+                            <Button text="Начать" fx:id="startButton4"/>
+                            <Button text="Остановить" fx:id="stopButton4"/>
+                        </buttons>
+                    </ButtonBar>
+                    <TableView fx:id="judgesTable4" editable="true">
+                        <columns>
+                            <TableColumn text="ФИО"/>
+                            <TableColumn text="Позиция"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Активность 5" closable="false">
+            <content>
+                <VBox>
+                    <HBox>
+                        <Label text="Время начала:"/>
+                        <TextField fx:id="startTimeField5"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Время окончания:"/>
+                        <TextField fx:id="endTimeField5"/>
+                    </HBox>
+                    <ButtonBar>
+                        <buttons>
+                            <Button text="Начать" fx:id="startButton5"/>
+                            <Button text="Остановить" fx:id="stopButton5"/>
+                        </buttons>
+                    </ButtonBar>
+                    <TableView fx:id="judgesTable5" editable="true">
+                        <columns>
+                            <TableColumn text="ФИО"/>
+                            <TableColumn text="Позиция"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

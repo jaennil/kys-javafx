@@ -66,21 +66,21 @@
     <HBox>
         <children>
             <Label text="Пароль:"/>
-            <UnmaskedPasswordField fx:id="passwordField" promptText="Password">
+            <PasswordField fx:id="passwordField" promptText="Password">
                 <font>
                     <Font name="System Italic" size="12.0"/>
                 </font>
-            </UnmaskedPasswordField>
+            </PasswordField>
         </children>
     </HBox>
     <HBox>
         <children>
             <Label text="Повтор пароля:"/>
-            <UnmaskedPasswordField fx:id="reEnterPasswordField" promptText="Re-enter password">
+            <PasswordField fx:id="reEnterPasswordField" promptText="Re-enter password">
                 <font>
                     <Font name="System Italic" size="12.0"/>
                 </font>
-            </UnmaskedPasswordField>
+            </PasswordField>
         </children>
     </HBox>
     <CheckBox fx:id="visiblePasswordCheckbox" mnemonicParsing="false" text="Видимый пароль"/>

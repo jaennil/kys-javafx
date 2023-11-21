@@ -24,6 +24,8 @@ public class MyProfile {
     public final StringProperty phoneNumber = new SimpleStringProperty("");
     public final StringProperty email = new SimpleStringProperty("");
     public final ObjectProperty<Image> image = new SimpleObjectProperty<>();
+    public String password;
+    public String reEnterPassword;
 
     public void init() {
         Database database = Database.getInstance();

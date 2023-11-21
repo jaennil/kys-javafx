@@ -16,8 +16,8 @@ public class MyProfile implements Initializable {
     public Label genderLabel;
     public Label dobLabel;
     public Label idNumberLabel;
-    public UnmaskedPasswordField reEnterPasswordField;
-    public UnmaskedPasswordField passwordField;
+    public PasswordField reEnterPasswordField;
+    public PasswordField passwordField;
     public Label countryLabel;
     public Label phoneNumberLabel;
     public Label emailLabel;
@@ -36,7 +36,19 @@ public class MyProfile implements Initializable {
         emailLabel.textProperty().bindBidirectional(model.email);
         image.imageProperty().bindBidirectional(model.image);
         visiblePasswordCheckbox.selectedProperty().addListener(event -> {
-            passwordField.toggleMask();
+            if (visiblePasswordCheckbox.isSelected()) {
+                model.password = passwordField.getText();
+                passwordField.clear();
+                passwordField.setPromptText(model.password);
+                model.reEnterPassword = reEnterPasswordField.getText();
+                reEnterPasswordField.clear();
+                reEnterPasswordField.setPromptText(model.password);
+            } else {
+                passwordField.setText(model.password);
+                passwordField.setPromptText("Password");
+                reEnterPasswordField.setText(model.reEnterPassword);
+                reEnterPasswordField.setPromptText("Re-enter password");
+            }
             System.out.println("visible password checkbox toggled");
         });
     }

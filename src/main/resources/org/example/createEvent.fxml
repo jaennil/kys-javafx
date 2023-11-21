@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="lblEventTimeStart" text="Начало:"/>
+   <DatePicker/>
+   <Label fx:id="lblEventTimeEnd" text="Окончание:"/>
+   <DatePicker/>
+   <Label fx:id="lblEvent" text="Мероприятие:"/>
+   <TextField fx:id="tfEvent" prefWidth="300"/>
+   <Label fx:id="lblEventType" text="Направление:"/>
+   <TextField fx:id="tfEventType" prefWidth="300"/>
+   <Label fx:id="lblEventCity" text="Город:"/>
+   <ComboBox prefWidth="150.0"/>
+   <Label fx:id="lblCSV" text="CSV:"/>
+   <TextField fx:id="tfCSV" prefWidth="300"/>
+   <Button fx:id="btnUploadCSV" mnemonicParsing="false" text="csv"/>
+   <Button mnemonicParsing="false" text="Доска"/>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <Label text="Активности"/>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <Label text="Наименование"/>
+         <TextField/>
+         <TextField/>
+         <TextField/>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <Label text="Время"/>
+         <DatePicker/>
+         <DatePicker/>
+         <DatePicker/>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <Label text="Жюри"/>
+         <ComboBox prefWidth="150.0"/>
+         <ComboBox prefWidth="150.0"/>
+         <ComboBox prefWidth="150.0"/>
+      </VBox>
+   </HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <Button mnemonicParsing="false" text="*"/>
+      <Button mnemonicParsing="false" text="Ok"/>
+   </HBox>
+</VBox>
